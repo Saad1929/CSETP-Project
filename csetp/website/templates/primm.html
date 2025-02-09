@@ -1,27 +1,40 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block content %}
+
+
 <div class="container">
-    <h1 class="mt-4">PRIMM: Predict, Run, Investigate, Modify, Make</h1>
-    
-    <h2>Predict</h2>
-    <p>What do you think the following code will do?</p>
-    <pre><code class="python">
+  <h1 class="mt-4 fade-in-heading">PRIMM: Predict, Run, Investigate, Modify, Make</h1>
+
+  <div class="primm-container">
+    <div class="primm-tile fade-in-1">
+      <h2>Predict</h2>
+      <p>What do you think the following code will do?</p>
+      <pre><code class="python">
 def greet(name):
     return f"Hello, {name}!"
 print(greet("Alice"))
-    </code></pre>
-    
-    <h2>Run</h2>
-    <p>Run the code in your environment and check the output.</p>
-    
-    <h2>Investigate</h2>
-    <p>Explain each part of the code: functions, parameters, and return values.</p>
-    
-    <h2>Modify</h2>
-    <p>Change the function to include a default name if none is provided.</p>
-    
-    <h2>Make</h2>
-    <p>Write your own function that asks for user input and greets them.</p>
+      </code></pre>
+    </div>
+
+    <div class="primm-tile fade-in-2">
+      <h2>Run</h2>
+      <p>Run the code in your environment and check the output.</p>
+    </div>
+
+    <div class="primm-tile fade-in-3">
+      <h2>Investigate</h2>
+      <p>Explain each part of the code: functions, parameters, and return values.</p>
+    </div>
+
+    <div class="primm-tile fade-in-4">
+      <h2>Modify</h2>
+      <p>Change the function to include a default name if none is provided.</p>
+    </div>
+
+    <div class="primm-tile fade-in-5">
+      <h2>Make</h2>
+      <p>Write your own function that asks for user input and greets them.</p>
+    </div>
+  </div>
 </div>
 {% endblock %}
