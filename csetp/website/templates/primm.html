@@ -1,6 +1,47 @@
 {% extends "base.html" %} 
 {% block content %}
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
+  .fade-in-heading {
+    animation: fadeIn 1.5s ease-in-out forwards;
+    text-align: center;
+  }
+
+  .primm-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 100px;
+  }
+
+  .primm-tile {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    width: 18%;
+    min-width: 180px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+
+  .fade-in-1 { animation-delay: 0.5s; }
+  .fade-in-2 { animation-delay: 1s; }
+  .fade-in-3 { animation-delay: 1.5s; }
+  .fade-in-4 { animation-delay: 2s; }
+  .fade-in-5 { animation-delay: 2.5s; }
+</style>
 
 <div class="container">
   <h1 class="mt-4 fade-in-heading">PRIMM: Predict, Run, Investigate, Modify, Make</h1>
@@ -8,13 +49,8 @@
   <div class="primm-container">
     <div class="primm-tile fade-in-1">
       <h2>Predict</h2>
-      <p>What do you think the following code will do?</p>
-      <pre><code class="python">
-def greet(name):
-    return f"Hello, {name}!"
-print(greet("Alice"))
-      </code></pre>
-    </div>
+      <p>Analyse and anticipate what a given piece of code will do before running it.</p>
+  </div>
 
     <div class="primm-tile fade-in-2">
       <h2>Run</h2>
@@ -23,17 +59,17 @@ print(greet("Alice"))
 
     <div class="primm-tile fade-in-3">
       <h2>Investigate</h2>
-      <p>Explain each part of the code: functions, parameters, and return values.</p>
+      <p>Explore the code's structure and behavior to understand how it works.</p>
     </div>
 
     <div class="primm-tile fade-in-4">
       <h2>Modify</h2>
-      <p>Change the function to include a default name if none is provided.</p>
+      <p>Make small changes to the code to test their understanding and see its effects.</p>
     </div>
 
     <div class="primm-tile fade-in-5">
       <h2>Make</h2>
-      <p>Write your own function that asks for user input and greets them.</p>
+      <p>Create your own programs based on what you have learned.</p>
     </div>
   </div>
 </div>
