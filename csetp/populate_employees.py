@@ -1,9 +1,12 @@
 import os
 import django
-from website.models import Employee
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "csetp.settings")
 django.setup()
+from website.models import Employee
+
+
 
 EMPLOYEES = [
     ("John", "Smith", "john.smith@company.com", "555-1234", "Software Engineer", "IT", 75000.00),
