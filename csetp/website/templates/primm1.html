@@ -39,11 +39,54 @@
         </div>
     </div>
 
-    <!-- Section 2 (Hidden initially) -->
-    <div id="section-2" style="display:none;">
+    <!-- Section 2 -->
+    <div id="section-2" style="display:none;" class="mt-5">
         <h2>Investigate</h2>
+        <p class="alert alert-info">
+            Have a look at your answer and the correct one. If they are the same, well done! 
+            If not, then investigate any differences.
+        </p>
+    
+        <form id="investigate-form">
+            <div class="mb-3">
+                <label for="question1" class="form-label">1. What does the <code>SELECT</code> clause do?</label>
+                <input type="text" class="form-control" id="question1" name="question1" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="question2" class="form-label">2. What is the role of the <code>WHERE job_title = "Software engineer"</code> condition?</label>
+                <input type="text" class="form-control" id="question2" name="question2" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="question3" class="form-label">3. How does MySQL determine which rows to return?</label>
+                <input type="text" class="form-control" id="question3" name="question3" required>
+            </div>
+    
+            <button type="button" class="btn btn-primary" id="submit-investigate" disabled onclick="submitInvestigate()">Submit</button>
+        </form>
+    
+        <div id="investigate-results" class="mt-4" style="display:none;">
+            <h3>Correct Answers</h3>
+            <p><strong>Your Answer:</strong> <span id="user-answer1"></span></p>
+            <p><strong>Correct Answer:</strong> The <code>SELECT</code> clause specifies which columns should be retrieved.</p>
+            
+            <p><strong>Your Answer:</strong> <span id="user-answer2"></span></p>
+            <p><strong>Correct Answer:</strong> The <code>WHERE</code> clause filters rows where <code>job_title</code> is "Software engineer".</p>
+            
+            <p><strong>Your Answer:</strong> <span id="user-answer3"></span></p>
+            <p><strong>Correct Answer:</strong> MySQL scans the table and returns rows that satisfy the <code>WHERE</code> condition.</p>
+    
+            <button id="next-section-btn-2" class="btn btn-success mt-3" style="display:none;" onclick="showSection3()">Next Section</button>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div id="section-3" style="display:none;" class="mt-5">
+        <h2>Modify</h2>
         <p>Content for the next step will go here.</p>
     </div>
+
 </div>
 
 <script>
@@ -91,6 +134,31 @@ function formatQueryResult(results) {
 function showNextSection() {
     document.getElementById("section-2").style.display = "block";
 }
+
+// Section 2
+
+document.addEventListener("input", function() {
+    let inputs = document.querySelectorAll("#investigate-form input");
+    let allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
+    document.getElementById("submit-investigate").disabled = !allFilled;
+});
+
+function submitInvestigate() {
+    document.getElementById("user-answer1").textContent = document.getElementById("question1").value;
+    document.getElementById("user-answer2").textContent = document.getElementById("question2").value;
+    document.getElementById("user-answer3").textContent = document.getElementById("question3").value;
+
+    document.getElementById("investigate-form").style.display = "none";
+    document.getElementById("investigate-results").style.display = "block";
+    document.getElementById("next-section-btn-2").style.display = "inline-block";
+}
+
+function showSection3() {
+    document.getElementById("section-3").style.display = "block";
+}
+
+
+
 </script>
 
 {% endblock %}
