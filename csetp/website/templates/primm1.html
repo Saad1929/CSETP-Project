@@ -4,5 +4,93 @@
 <div class="container mt-5">
     <h1 class="text-center">Primm Question Set 1</h1>
     <p class="text-center">This page will contain interactive PRIMM questions for SQL learning.</p>
+
+    <!-- Section 1: Predict and Run -->
+    <div id="section-1">
+        <h2>Predict and Run</h2>
+        <p>What do you think will happen when the following SQL query is run?</p>
+        <pre>SELECT first_name, last_name, email FROM employees WHERE job_title = "Software engineer";</pre>
+        
+        <form id="predict-form">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="prediction" value="1" id="option1">
+                <label class="form-check-label" for="option1">It will return all employees.</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="prediction" value="2" id="option2">
+                <label class="form-check-label" for="option2">It will return all the software engineers.</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="prediction" value="3" id="option3">
+                <label class="form-check-label" for="option3">It will return an error.</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="prediction" value="4" id="option4">
+                <label class="form-check-label" for="option4">It will return an empty result.</label>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="runQuery()">RUN</button>
+        </form>
+        
+        <div id="query-output" class="mt-4" style="display:none;">
+            <h3>Query Result:</h3>
+            <pre id="result-display"></pre>
+            <p id="answer-feedback"></p>
+            <button id="next-section-btn" class="btn btn-success" style="display:none;" onclick="showNextSection()">Next Section</button>
+        </div>
+    </div>
+
+    <!-- Section 2 (Hidden initially) -->
+    <div id="section-2" style="display:none;">
+        <h2>Investigate</h2>
+        <p>Content for the next step will go here.</p>
+    </div>
 </div>
+
+<script>
+function runQuery() {
+    let correctAnswer = "2";  // Correct answer is 'It will return all the software engineers.'
+    let selected = document.querySelector('input[name="prediction"]:checked');
+    
+    if (!selected) {
+        alert("Please select an answer first!");
+        return;
+    }
+    
+    fetch("{% url 'run_sql_query' %}")
+    .then(response => response.json())
+    .then(data => {
+        let resultContainer = document.getElementById("result-display");
+        resultContainer.innerHTML = formatQueryResult(data.result);
+        
+        document.getElementById("query-output").style.display = "block";
+        
+        if (selected.value === correctAnswer) {
+            document.getElementById("answer-feedback").innerHTML = "✅ Correct! Well done.";
+            document.getElementById("next-section-btn").style.display = "inline-block";
+        } else {
+            document.getElementById("answer-feedback").innerHTML = "❌ Incorrect. Have a look at the condition again";
+        }
+    });
+}
+
+function formatQueryResult(results) {
+    if (results.length === 0) {
+        return "<p>No results found.</p>";
+    }
+
+    let table = "<table class='table table-bordered mt-3'><thead><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Job Title</th></tr></thead><tbody>";
+    
+    results.forEach(row => {
+        table += `<tr><td>${row.first_name}</td><td>${row.last_name}</td><td>${row.email}</td><td>${row.job_title}</td></tr>`;
+    });
+
+    table += "</tbody></table>";
+    return table;
+}
+
+function showNextSection() {
+    document.getElementById("section-2").style.display = "block";
+}
+</script>
+
 {% endblock %}
