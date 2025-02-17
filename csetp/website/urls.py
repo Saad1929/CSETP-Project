@@ -8,4 +8,6 @@ urlpatterns = [
     path('all-questions/', views.all_questions, name="all-questions"), 
     path('primm1/', views.primm1, name="primm1"),
     path('run-sql-query/', views.run_sql_query, name="run_sql_query"),
+    path('run-modified-query/', views.run_modified_query, name="run_modified_query"),
+    path('run-make-query/', views.run_make_query, name="run_make_query"),
 ]
