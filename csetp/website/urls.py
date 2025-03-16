@@ -7,7 +7,12 @@ urlpatterns = [
     path('database/', views.database_employee, name="employee-list"),
     path('all-questions/', views.all_questions, name="all-questions"), 
     path('primm1/', views.primm1, name="primm1"),
+    path('primm2/', views.primm2, name="primm2"),
+    path('primm3/', views.primm3, name="primm3"),
     path('run-sql-query/', views.run_sql_query, name="run_sql_query"),
     path('run-modified-query/', views.run_modified_query, name="run_modified_query"),
     path('run-make-query/', views.run_make_query, name="run_make_query"),
+    path('run-sql-query-aggregate/', views.run_sql_query_aggregate, name="run_sql_query_aggregate"),
+    path('run-modified-query-aggregate/', views.run_modified_query_aggregate, name="run_modified_query_aggregate"),
+    path('run-make-query-aggregate/', views.run_make_query_aggregate, name="run_make_query_aggregate")
 ]

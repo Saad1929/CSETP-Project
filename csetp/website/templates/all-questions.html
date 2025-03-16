@@ -4,9 +4,17 @@
 <div class="container mt-5">
     <h1 class="text-center">All Questions</h1>
     <ul class="list-group mt-4">
-        <li class="list-group-item">
-            <a href="{% url 'primm1' %}" class="text-primary">Primm Question Set 1</a>
-        </li>
+        <ul class="list-group mt-4">
+            <li class="list-group-item">
+                <a href="{% url 'primm1' %}" class="text-primary">Primm Question Set 1 (Beginner)</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'primm2' %}" class="text-primary">Primm Question Set 2 (Medium)</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'primm3' %}" class="text-primary">Primm Question Set 3 (Advanced)</a>
+            </li>
+        </ul>
     </ul>
 </div>
 {% endblock %}
