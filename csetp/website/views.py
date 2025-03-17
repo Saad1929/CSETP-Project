@@ -43,23 +43,18 @@ def run_modified_query(request):
             data = json.loads(request.body)
             user_query = data.get("query", "").strip()
 
-            # Prevent potentially dangerous queries (Basic protection)
             if any(word in user_query.upper() for word in ["DROP", "DELETE", "UPDATE", "INSERT"]):
                 return JsonResponse({"error": "❌ Unsafe query detected. Only SELECT statements are allowed.", "correct": False})
 
-            # Django uses app-based table naming convention, replacing 'employees' with 'website_employee'
             corrected_query = user_query.replace("employees", "website_employee")
 
-            # Execute the user-provided SQL query
             with connection.cursor() as cursor:
                 cursor.execute(corrected_query)
                 columns = [col[0] for col in cursor.description]  # Get column names
                 result = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
-            # Expected correct query result
             expected_result = list(Employee.objects.filter(department="IT").values("first_name", "last_name", "email"))
 
-            # Compare user query result with expected IT department employees
             is_correct = result == expected_result
 
             return JsonResponse({"result": result, "correct": is_correct})
@@ -76,23 +71,19 @@ def run_make_query(request):
             data = json.loads(request.body)
             user_query = data.get("query", "").strip().lower()
 
-            # The correct answer for the question
             correct_query = 'select * from website_employee where salary < 80000;'
 
-            # Validate MySQL syntax and column names
             with connection.cursor() as cursor:
                 try:
                     cursor.execute(user_query)
                 except Exception as e:
                     return JsonResponse({"error": f"❌ SQL Syntax Error: {str(e)}", "correct": False})
 
-            # If valid SQL, check if it matches the correct query
             is_correct = user_query.replace(" ", "").replace("\n", "") == correct_query.replace(" ", "").replace("\n", "")
 
             if is_correct:
                 return JsonResponse({"correct": True})  # Will trigger success popup on frontend
 
-            # If incorrect, provide hints
             hint = ""
             if "salary" not in user_query:
                 hint = "It looks like you're not filtering by salary."
@@ -129,21 +120,16 @@ def run_modified_query_aggregate(request):
             data = json.loads(request.body)
             user_query = data.get("query", "").strip()
 
-            # Ensure the user query is not empty
             if not user_query:
                 return JsonResponse({"error": "❌ Query is empty. Please enter a valid SQL query.", "correct": False})
 
-            # Prevent unsafe queries
             if any(word in user_query.upper() for word in ["DROP", "DELETE", "UPDATE", "INSERT"]):
                 return JsonResponse({"error": "❌ Unsafe query detected. Only SELECT statements are allowed.", "correct": False})
 
-            # Correct SQL query
             correct_query = 'SELECT COUNT(email) FROM website_employee WHERE job_title = "Data Scientist";'
 
-            # Replace 'employees' with 'website_employee' (Django ORM uses app name prefix)
             user_query = user_query.replace("employees", "website_employee")
 
-            # Execute user's SQL query
             with connection.cursor() as cursor:
                 try:
                     cursor.execute(user_query)
@@ -151,10 +137,8 @@ def run_modified_query_aggregate(request):
                 except Exception as e:
                     return JsonResponse({"error": f"❌ SQL Execution Error: {str(e)}", "correct": False})
 
-            # Expected correct result
             expected_result = Employee.objects.filter(job_title="Data Scientist").count()
 
-            # Compare user result with expected result
             is_correct = result == expected_result
 
             return JsonResponse({"result": result, "correct": is_correct})
@@ -172,17 +156,13 @@ def run_make_query_aggregate(request):
             data = json.loads(request.body)
             user_query = data.get("query", "").strip()
 
-            # The correct answer for the question
             correct_query = 'SELECT SUM(salary) FROM website_employee WHERE department = "Marketing";'
 
-            # Prevent unsafe queries
             if any(word in user_query.upper() for word in ["DROP", "DELETE", "UPDATE", "INSERT"]):
                 return JsonResponse({"error": "❌ Unsafe query detected. Only SELECT statements are allowed.", "correct": False})
 
-            # Replace 'employees' with 'website_employee' (Django ORM uses app name prefix)
             user_query = user_query.replace("employees", "website_employee")
 
-            # Validate SQL syntax
             with connection.cursor() as cursor:
                 try:
                     cursor.execute(user_query)
@@ -190,13 +170,10 @@ def run_make_query_aggregate(request):
                 except Exception as e:
                     return JsonResponse({"error": f"❌ SQL Syntax Error: {str(e)}", "correct": False})
 
-            # Expected correct result
             expected_result = Employee.objects.filter(department="Marketing").aggregate(Sum("salary"))["salary__sum"]
 
-            # Compare user result with expected result
             is_correct = result == expected_result
 
-            # Provide hints if incorrect
             hint = ""
             if "sum" not in user_query.lower():
                 hint = "It looks like you're not using SUM()."
@@ -247,18 +224,15 @@ def run_modified_query_join(request):
             if not user_query:
                 return JsonResponse({"error": "❌ Query is empty. Please enter a valid SQL query.", "correct": False})
 
-            # Prevent unsafe queries
             if any(word in user_query.upper() for word in ["DROP", "DELETE", "UPDATE", "INSERT"]):
                 return JsonResponse({"error": "❌ Unsafe query detected. Only SELECT statements are allowed.", "correct": False})
 
-            # Standardizing table names
             corrected_query = (
                 user_query
                 .replace("employees", "website_employee")
                 .replace("projects", "website_project")
             )
 
-            # Execute the user's SQL query
             with connection.cursor() as cursor:
                 try:
                     cursor.execute(corrected_query)
@@ -267,7 +241,6 @@ def run_modified_query_join(request):
                 except Exception as e:
                     return JsonResponse({"error": f"❌ SQL Execution Error: {str(e)}", "correct": False})
 
-            # Fix the alias issue: Use "expected_project_name" instead of "project_name"
             expected_result = list(
                 Project.objects.filter(start_date__gt="2023-01-01")
                 .values(
@@ -277,7 +250,6 @@ def run_modified_query_join(request):
                 )
             )
 
-            # Normalize: Convert all values to lowercase strings, remove spaces, and sort both lists
             def normalize_data(data, rename_field=False):
                 normalized = []
                 for d in data:
@@ -312,14 +284,10 @@ def run_make_query(request):
             if not user_query:
                 return JsonResponse({"error": "❌ Query is empty. Please enter a valid SQL query.", "correct": False})
 
-            # Prevent unsafe queries
             if any(word in user_query.upper() for word in ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]):
                 return JsonResponse({"error": "❌ Unsafe query detected. Only SELECT statements are allowed.", "correct": False})
 
-            # Debugging: Print the raw user query
-            print("🔎 USER QUERY:", user_query)
 
-            # Standardizing table names
             corrected_query = (
                 user_query
                 .replace("employees", "website_employee")
@@ -327,7 +295,6 @@ def run_make_query(request):
                 .replace("employee_email", "employee_id")  # Fix incorrect column references
             )
 
-            # Execute the user's SQL query
             with connection.cursor() as cursor:
                 try:
                     cursor.execute(corrected_query)
@@ -336,17 +303,13 @@ def run_make_query(request):
                 except Exception as e:
                     return JsonResponse({"error": f"❌ SQL Execution Error: {str(e)}", "correct": False})
 
-            # ✅ Correct Django ORM query to get employees with no projects
             expected_result = list(
                 Employee.objects.filter(project__isnull=True)
                 .values("first_name", "last_name")
             )
 
-            # 🚀 Debugging: Print both results to check mismatches
-            print("🔎 USER QUERY RESULT:", user_result)
-            print("🔎 EXPECTED RESULT:", expected_result)
 
-            # Normalize: Convert all values to lowercase strings, remove spaces, and sort both lists
+
             def normalize_data(data):
                 return sorted(
                     [{k: str(v).strip().lower() for k, v in d.items()} for d in data],
@@ -356,14 +319,9 @@ def run_make_query(request):
             user_result_normalized = normalize_data(user_result)
             expected_result_normalized = normalize_data(expected_result)
 
-            # 🚀 Debugging: Print normalized results
-            print("🔎 NORMALIZED USER QUERY RESULT:", user_result_normalized)
-            print("🔎 NORMALIZED EXPECTED RESULT:", expected_result_normalized)
 
-            # Check if the results match
             is_correct = user_result_normalized == expected_result_normalized
 
-            # ✅ Custom Hint: If user forgets "IS NULL"
             if not is_correct and "IS NULL" not in user_query.upper():
                 return JsonResponse({"error": "❌ Hint: Make sure you use `WHERE projects.employee_email IS NULL`.", "correct": False})
 
