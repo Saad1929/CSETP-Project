@@ -13,3 +13,11 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.job_title}"
 
+class Project(models.Model):
+    project_name = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE) 
+
+    def __str__(self):
+        return f"{self.project_name} - {self.employee.first_name} {self.employee.last_name}"

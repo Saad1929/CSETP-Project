@@ -3,7 +3,11 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center">Primm Question Set 1</h1>
-    <p class="text-center">This page will contain interactive PRIMM questions for SQL learning.</p>
+    <p class="text-center">This page will contain interactive PRIMM questions for learning SQL basics.</p>
+    <p class="text-center">
+        Need to review the employee database? 
+        <a href="{% url 'employee-list' %}" class="text-primary" target="_blank">Click here</a>.
+    </p>
 
     <!-- Section 1 Predict and Run -->
     <div id="section-1">
@@ -68,12 +72,15 @@
     
         <div id="investigate-results" class="mt-4" style="display:none;">
             <h3>Correct Answers</h3>
+            <p><strong>Question 1:</strong> What does the <code>SELECT</code> clause do? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer1"></span></p>
             <p><strong>Correct Answer:</strong> The <code>SELECT</code> clause specifies which columns should be retrieved.</p>
             
+            <p><strong>Question 2:</strong> What is the role of the <code>WHERE job_title = "Software engineer"</code> condition? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer2"></span></p>
             <p><strong>Correct Answer:</strong> The <code>WHERE</code> clause filters rows where <code>job_title</code> is "Software engineer".</p>
             
+            <p><strong>Question 3:</strong> How does MySQL determine which rows to return? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer3"></span></p>
             <p><strong>Correct Answer:</strong> MySQL scans the table and returns rows that satisfy the <code>WHERE</code> condition.</p>
     

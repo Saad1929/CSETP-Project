@@ -4,6 +4,10 @@
 <div class="container mt-5">
     <h1 class="text-center">Primm Question Set 2</h1>
     <p class="text-center">This page will contain interactive PRIMM questions focused on aggregate functions.</p>
+    <p class="text-center">
+        Need to review the employee database? 
+        <a href="{% url 'employee-list' %}" class="text-primary" target="_blank">Click here</a>.
+    </p>
 
     <!-- Section 1: Predict and Run -->
     <div id="section-1">
@@ -68,15 +72,18 @@
     
         <div id="investigate-results" class="mt-4" style="display:none;">
             <h3>Correct Answers</h3>
+            <p><strong>Question 1:</strong> What does the <code>COUNT()</code> function do? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer1"></span></p>
             <p><strong>Correct Answer:</strong> The <code>COUNT()</code> function counts the number of rows that match the condition.</p>
-            
+            <p> </p>
+            <p><strong>Question 2:</strong> Does it matter if we count emails or another column? Why or why not? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer2"></span></p>
             <p><strong>Correct Answer:</strong> It does not matter unless you count NULL values. <code>COUNT(column)</code> only counts non-null values, while <code>COUNT(*)</code> counts all rows.</p>
-            
+            <p> </p>
+            <p><strong>Question 3:</strong> SQL has other aggregate functions. For example, what do you think <code>SUM()</code> does? </p>
             <p><strong>Your Answer:</strong> <span id="user-answer3"></span></p>
             <p><strong>Correct Answer:</strong> <code>SUM()</code> adds up all numeric values in a column.</p>
-    
+            <p> </p>
             <button id="next-section-btn-2" class="btn btn-success mt-3" style="display:none;" onclick="showSection3()">Next Section</button>
         </div>
     </div>

@@ -1,10 +1,10 @@
 import os
 import django
-
+from datetime import date
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "csetp.settings")
 django.setup()
-from website.models import Employee
+from website.models import Employee, Project
 
 
 
@@ -45,5 +45,28 @@ def populate():
             )
     print("Successfully added employees!")
 
+
+PROJECTS = [
+    ("AI Research", "2023-01-10", "2023-12-10", "john.smith@company.com"),
+    ("Data Analytics", "2023-03-15", None, "emma.johnson@company.com"),
+    ("Marketing Campaign", "2023-06-01", None, "david.anderson@company.com"),
+    ("HR Recruitment", "2023-04-20", "2023-09-30", "sophia.taylor@company.com"),
+    ("Product Development", "2023-05-01", None, "alexander.walker@company.com"),
+    ("Cloud Migration", "2023-07-01", "2023-11-30", "lucas.hill@company.com")
+]
+
+def populate_projects():
+    for project_name, start_date, end_date, employee_email in PROJECTS:
+        employee = Employee.objects.filter(email=employee_email).first()
+        if employee and not Project.objects.filter(project_name=project_name, employee=employee).exists():
+            Project.objects.create(
+                project_name=project_name,
+                start_date=date.fromisoformat(start_date),
+                end_date=date.fromisoformat(end_date) if end_date else None,
+                employee=employee
+            )
+    print("Successfully added projects!")
+
 if __name__ == "__main__":
     populate()
+    populate_projects()

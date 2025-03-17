@@ -14,5 +14,9 @@ urlpatterns = [
     path('run-make-query/', views.run_make_query, name="run_make_query"),
     path('run-sql-query-aggregate/', views.run_sql_query_aggregate, name="run_sql_query_aggregate"),
     path('run-modified-query-aggregate/', views.run_modified_query_aggregate, name="run_modified_query_aggregate"),
-    path('run-make-query-aggregate/', views.run_make_query_aggregate, name="run_make_query_aggregate")
+    path('run-make-query-aggregate/', views.run_make_query_aggregate, name="run_make_query_aggregate"),
+    path('database2/', views.database_projects, name="project-list"),
+    path('run-sql-query-join/', views.run_sql_query_join, name="run_sql_query_join"),
+    path('run-modified-query-join/', views.run_modified_query_join, name="run_modified_query_join"),
+    path('run-make-query/', views.run_make_query, name="run_make_query"),
 ]
