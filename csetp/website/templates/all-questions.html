@@ -1,20 +1,21 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center">All Questions</h1>
     <ul class="list-group mt-4">
-        <ul class="list-group mt-4">
-            <li class="list-group-item">
-                <a href="{% url 'primm1' %}" class="text-primary">Primm Question Set 1 (Beginner)</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{% url 'primm2' %}" class="text-primary">Primm Question Set 2 (Medium)</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{% url 'primm3' %}" class="text-primary">Primm Question Set 3 (Advanced)</a>
-            </li>
-        </ul>
+        <li class="list-group-item">
+            <a href="{% url 'primm1' %}" class="text-primary">Primm Question Set 1 (Beginner)</a>
+            <p class="text-muted">This question set introduces basic SQL querying, covering `SELECT`, `FROM`, and `WHERE` clauses to filter and retrieve data.</p>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'primm2' %}" class="text-primary">Primm Question Set 2 (Medium)</a>
+            <p class="text-muted">This question set is slightly more advanced and focuses on aggregate functions such as `COUNT()`, `SUM()`, and their role in summarizing data.</p>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'primm3' %}" class="text-primary">Primm Question Set 3 (Advanced)</a>
+            <p class="text-muted">This advanced question set explores JOINs, including `INNER JOIN` and `LEFT JOIN`, to query data across multiple tables.</p>
+        </li>
     </ul>
 </div>
 {% endblock %}

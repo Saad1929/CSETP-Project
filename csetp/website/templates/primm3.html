@@ -268,7 +268,7 @@ function showSection4() {
 function submitMakeQuery() {
     let userQuery = document.getElementById("make-query").value;
 
-    fetch("{% url 'run_make_query' %}", {
+    fetch("{% url 'run_make_query_primm3' %}", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

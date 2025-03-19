@@ -18,5 +18,5 @@ urlpatterns = [
     path('database2/', views.database_projects, name="project-list"),
     path('run-sql-query-join/', views.run_sql_query_join, name="run_sql_query_join"),
     path('run-modified-query-join/', views.run_modified_query_join, name="run_modified_query_join"),
-    path('run-make-query/', views.run_make_query, name="run_make_query"),
+    path('run_make_query_primm3/', views.run_make_query_primm3, name="run_make_query_primm3"),
 ]

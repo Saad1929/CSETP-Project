@@ -275,7 +275,7 @@ def run_modified_query_join(request):
 
 
 @csrf_exempt
-def run_make_query(request):
+def run_make_query_primm3(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
